@@ -1,12 +1,29 @@
 <script lang="ts">
 import Heading from '../ui/HeadingText.vue';
+import Input from '../ui/Input.vue';
+
+    interface formInterFace {
+        streetAddress: any
+    }
 
     export default {
-        components: {Heading},
+        components: {Heading, Input},
         props: ['toggle','show'],
         data() {
             return {
-                isEditing: false
+                isEditing: false,
+                form: {
+                    streetAddress: 'Hello' as any
+                } as formInterFace
+            }
+        },
+
+        methods: {
+            updateFieldValue(name: String, value: any) {
+                this.form.streetAddress = value;
+                
+                console.log(name);
+                console.log(value);
             }
         }
     }
@@ -19,7 +36,10 @@ import Heading from '../ui/HeadingText.vue';
                 <Heading :type="'h1'">
                     {{isEditing ? "Edit  Invoice #53423" : "New  Invoice"}}
                 </Heading>
+                <p class="form-section-title">Bill From</p>
+                <Input :label="'Street Address'" :updateValue="updateFieldValue" :name="'streetAddress'" :value="form.streetAddress" />
             </div>
+            <!-- <p>{{ form.streetAddress }}</p> -->
         </form>
     </div>
     <div class="overlay" :style="{'transform': show ? 'translateX(0%)' : 'translateX(-100%)'}" @click="toggle">
@@ -60,10 +80,17 @@ import Heading from '../ui/HeadingText.vue';
             font-size: 1.5rem;
         }
     }
-
+    
     .form-dark {
           background-color: $mirage2;
           color: white;
+    }
+
+    .form-section-title {
+        @include normalText;
+        color: $purple;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
     }
 
 
