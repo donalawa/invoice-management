@@ -12,11 +12,25 @@
     }
 </script>
 
+<script lang="ts" setup>
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const  themeStore  = useThemeStore();
+
+    const { getDeviceType } = storeToRefs(store);
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
 <template>
     <div>
-        <div class="dropdown-container dark-container" @click="open = !open">
+        <div class="dropdown-container" :class="getThemeMode == 'dark' ? 'dark-container' : ''" @click="open = !open">
            <div>
-                <v-template v-if="mobile"> Filter </v-template>
+                <v-template v-if="getDeviceType == 'phone'"> Filter </v-template>
                 <v-template v-else> Filter by status </v-template>
                 <svg
                 width="11"
@@ -35,7 +49,7 @@
                 />
                 </svg>
            </div>
-        <div class="dropdown dark-dropdown" v-if="open">
+        <div class="dropdown" :class="getThemeMode == 'dark' ? 'dark-dropdown' : ''" v-if="open">
             <CheckBoxItem :label="'Draft'" :name="'draft'"/>
             <CheckBoxItem :label="'Pending'" :name="'pending'"/>
             <CheckBoxItem :label="'Paid'" :name="'paid'"/>

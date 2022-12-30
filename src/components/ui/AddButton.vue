@@ -8,6 +8,14 @@
         }
     }
 </script>
+<script lang="ts" setup>
+    import { useScreenStore } from '../../stores/screen';
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const { getDeviceType } = storeToRefs(store);
+
+</script>
 
 <template>
     <button class="add-button" @click="clicked">
@@ -20,7 +28,7 @@
             />
             </svg>
             </span>
-            {{phone ? "New" : "New Invoice"}}
+            {{getDeviceType == 'phone' ? "New" : "New Invoice"}}
      
     </button>
 </template>

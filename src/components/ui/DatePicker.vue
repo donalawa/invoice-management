@@ -1,36 +1,24 @@
-<script lang="ts">
+<script>
     export default {
-        props:['name','value', 'label', 'updateValue','errors', 'type', 'isName']
+        props:['name','value', 'label', 'updateValue','errors']
+        
     }
 </script>
 
 <template>
-    <div class="input-container dark-input" :class="isName ? 'name-field' : ''">
+    <div class="dark">
         <label class="label-text" for="name">{{ label }}</label>
         <label class="error-text" v-for="(error, index) of errors" :key="index" for="">{{ error.$message }}</label>
-        <input class="input-field"  :value="value" @change="(e) => updateValue(name, e.target.value)" :type="type" placeholder="Enter value">
+        <input @change="(e) => updateValue(name, e.target.value)" :value="value" class="date-field dark-date" type="date">
     </div>
-</template>
+</template>  
 
 <style lang="scss" scoped>
     @import '../../scss/globals.scss';
     @import '../../scss/_mixins.scss';
     @import '../../scss/_variables.scss';
 
-    .input-container {
-        margin-bottom: 1.5rem;
-        position: relative;
-    }
-
-    .name-field {
-        @media (min-width: $tablet) {
-            min-width: 214px;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-        }
-    }
-
-    .input-field {
+    .date-field {
         width: 100%;
         height: 3rem;
         padding: 0 1.125rem;
@@ -44,16 +32,6 @@
         }
     }
 
-    .dark-input {
-          label {
-            color: white;
-        }
-        input {
-            color: white;
-            background-color: $mirage;
-            border: 1px solid $ebony;
-        }
-    }
 
     .label-text {
         display: block;
@@ -61,6 +39,20 @@
         @include normalText;
         color: $shipCove;
     }
+
+    .dark-date {
+        color: white;
+        background-color: $mirage;
+        border: 1px solid $ebony;
+        color-scheme: dark;
+    }
+
+    .dark {
+        label {
+            color: white;
+        }
+    }
+
 
     .error-text {
        

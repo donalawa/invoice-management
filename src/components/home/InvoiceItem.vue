@@ -13,22 +13,36 @@
         }
     }
 </script>
+<script lang="ts" setup>
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const  themeStore  = useThemeStore();
+
+    const { getDeviceType } = storeToRefs(store);
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
 
 <template>
-    <div class="item-container item-dark ">
+    <div class="item-container  " :class="getThemeMode == 'dark' ? 'item-dark' : ''" @click="this.$router.push({ path: '/invoice/RT3080' })">
         <div class="item-overview">
             <p class="itemId">
                 <span>#</span>
                 RT3080
             </p>
-            <p v-if="phone" class="client-name  dark-text ">John Doe</p>
-            <p v-if="!phone" class="invoice-date  dark-text ">Due 19 Aug 2021</p>
+            <p v-if="getDeviceType == 'phone'" class="client-name   " :class="getThemeMode == 'dark' ? 'dark-text' : ''" >John Doe</p>
+            <p v-if="getDeviceType != 'phone'" class="invoice-date " :class="getThemeMode == 'dark' ? 'dark-text' : ''" >Due 19 Aug 2021</p>
         </div>
         <div class="invoice-info">
             <div class="date-mount-wrapper">
-                <p v-if="phone" class="invoice-date  dark-text ">Due 19 Aug 2021</p>
-                <p v-if="!phone" class="client-name  dark-text ">John Doe</p>
-                <p class="invoice-amount amount-dark">$22,000</p>
+                <p v-if="getDeviceType == 'phone'" class="invoice-date  " :class="getThemeMode == 'dark' ? 'dark-text' : ''" >Due 19 Aug 2021</p>
+                <p v-if="getDeviceType != 'phone'" class="client-name " :class="getThemeMode == 'dark' ? 'dark-text' : ''" >John Doe</p>
+                <p class="invoice-amount" :class="getThemeMode == 'dark' ? 'amount-dark' : ''" >$22,000</p>
             </div>
             <div class="status-wrapper">
                 <InvoiceStatus :status="status"/>

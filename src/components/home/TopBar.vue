@@ -6,22 +6,32 @@
     export default {
         components: { HeadingText, FilterDropdown, AddButton },
         props: ['toggle'],
-        data() {
-            return {
-                phone: false
-            }
-        },
 
     }
 </script>
 
+<script lang="ts" setup>
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const  themeStore  = useThemeStore();
+
+    const { getDeviceType } = storeToRefs(store);
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
+
 <template>
-    <div class="bar-container bar-container-dark ">
+    <div class="bar-container " :class="getThemeMode == 'dark' ? 'bar-container-dark' : ''">
         <div>
             <HeadingText :type="'h1'">
                 Invoices
             </HeadingText>
-            <p class="overview" v-if="phone">invoices</p>
+            <p class="overview" v-if="getDeviceType == 'phone'">invoices</p>
             <p v-else class="overview">There are 10 total invoices</p>
         </div>
         <div class="bar-controls">

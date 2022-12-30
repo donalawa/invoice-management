@@ -4,8 +4,23 @@
     }
 </script>
 
+<script lang="ts" setup>
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const  themeStore  = useThemeStore();
+
+    const { getDeviceType } = storeToRefs(store);
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
+
 <template>
-    <div class="checkbox-container dark">
+    <div class="checkbox-container" :class="getThemeMode == 'dark' ? 'dark' : ''" >
         <input type="checkbox" :checked="false" :name="name" id="">
         <label :for="name">{{label}}</label>
     </div>

@@ -17,8 +17,18 @@
         }
     }
 </script>
+
+<script lang="ts" setup>
+    import { useThemeStore } from  '../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const  themeStore  = useThemeStore();
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
 <template>
-    <div class="home-container dark-home">
+    <div class="home-container" :class="getThemeMode == 'dark' ? 'dark-home' : ''">
         <TopBar :toggle="toggleForm"/>
         <InvoiceList />
     </div>

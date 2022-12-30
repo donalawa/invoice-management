@@ -5,9 +5,23 @@
         }
     }
 </script>
+<script lang="ts" setup>
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+
+    import  { storeToRefs } from 'pinia';
+
+    const store = useScreenStore();
+    const  themeStore  = useThemeStore();
+
+    const { getDeviceType } = storeToRefs(store);
+    const { getThemeMode } = storeToRefs(themeStore);
+
+</script>
 
 <template>
-    <div v-if="status == 'draft'" class="draft text-dark">
+    <div v-if="status == 'draft'" class="draft" :class="getThemeMode == 'dark' ? 'text-dark' : ''">
         <span></span>
         <p>Draft</p>
     </div>
