@@ -1,21 +1,35 @@
 <script lang="ts">
     import  Heading  from  '../ui/HeadingText.vue';
     import InvoiceReceipt  from '../view-invoice/InvoiceReceipt.vue';
-    
+
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
+
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+
+            return { getThemeMode, getDeviceType }
+        },
         components: { Heading, InvoiceReceipt }
     }
 </script>
 
 <template>
-    <div class="details-container dark-container ">
+    <div class="details-container"  :class="getThemeMode == 'dark' ? 'dark-container' : ''">
         <div class="details-top">
             <div>
-                <p class="invoice-id text-light">
+                <p class="invoice-id" :class="getThemeMode == 'dark' ? 'text-light' : ''">
                     <span>#</span>
                     RT3080
                 </p>
-                <p class="invoice-description text-light">
+                <p class="invoice-description" :class="getThemeMode == 'dark' ? 'text-light' : ''">
                     Re-branding
                 </p>
             </div>
@@ -28,19 +42,19 @@
         </div>
         <div class="billing-container">
             <div class="date-info">
-                <p class="label-style text-light">Invoice Date</p>
+                <p class="label-style" :class="getThemeMode == 'dark' ? 'text-light' : ''">Invoice Date</p>
                 <Heading :type="'h3'">
                     18 Aug 2021
                 </Heading>
 
-                <p class="label-style text-light">Payment Due</p>
+                <p class="label-style" :class="getThemeMode == 'dark' ? 'text-light' : ''">Payment Due</p>
                 <Heading :type="'h3'">
                     19 Aug 2021
                 </Heading>
             </div>
 
             <div class="date-info">
-                <p class="label-style text-light">Bill To</p>
+                <p class="label-style" :class="getThemeMode == 'dark' ? 'text-light' : ''">Bill To</p>
                 <Heading :type="'h3'">
                     Jensen Huang
                 </Heading>
@@ -54,7 +68,7 @@
             </div>
 
             <div class="date-info">
-                <p class="label-style text-light">Sent To</p>
+                <p class="label-stylet" :class="getThemeMode == 'dark' ? 'text-light' : ''">Sent To</p>
                 <Heading :type="'h3'">
                     jensenh@mail.com
                 </Heading>

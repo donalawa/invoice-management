@@ -3,7 +3,20 @@
     import  HeadingText from '../ui/HeadingText.vue';
     import  ReceiptMobileItem from './ReceiptMobileItem.vue';
     
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+
+            return { getThemeMode, getDeviceType }
+        },
         components: { Fragement, HeadingText, ReceiptMobileItem },
         data() {
             return {
@@ -12,24 +25,16 @@
         }
     }
 </script>
-<script lang="ts" setup>
-    import { useScreenStore } from '../../stores/screen';
-    import  { storeToRefs } from 'pinia';
-
-    const store = useScreenStore();
-    const { getDeviceType } = storeToRefs(store);
-
-</script>
 
 <template>
     <Fragement>
         <Fragement v-if="getDeviceType == 'phone'">
-            <div class="mobile-container mobile-container-dark">
+            <div class="mobile-container" :class="getThemeMode == 'dark' ?  'mobile-container-dark' : ''">
                 <div class="spacer">
                     <ReceiptMobileItem />
                     <ReceiptMobileItem />
                 </div>
-                <div class="sub-total-container sub-total-dark ">
+                <div class="sub-total-container "  :class="getThemeMode == 'dark' ? 'sub-total-dark' : ''">
                     <p class="total-label">Grand Total</p>
                     <HeadingText :type="'h2'">
                         $556.00
@@ -38,7 +43,7 @@
             </div>
         </Fragement>
         <Fragement v-if="getDeviceType != 'phone'">
-        <table class="receipt-container dark-container">
+        <table class="receipt-container" :class="getThemeMode == 'dark' ? 'dark-container' : ''">
             <thead>
                 <tr>
                     <td>Item Name</td>
@@ -62,7 +67,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="receipt-total dark-total">
+        <div class="receipt-total " :class="getDeviceType == 'dark' ? 'dark-total' : ''">
             <p class="total-label">
                 Amount Due
             </p>
@@ -84,7 +89,7 @@
 
     thead tr td {
         @include smallText;
-        color: $shipCove;
+        color: $shipCove  !important;
         font-weight: 500;
         &:first-child {
         text-align: left;
@@ -100,6 +105,7 @@
         @include normalText;
         font-weight: bold;
         text-align: left;
+        // color: #000;
         }
     }
 
@@ -123,12 +129,14 @@
         color: white;
 
         thead tr td {
-            color: white;
+            color: white; 
         }
 
         tbody tr td {
             color: white;
         }
+
+        
     }
 
     .receipt-total {
@@ -145,19 +153,10 @@
         background-color: $vulcan;
     }
 
-    .total-label {
-        @include smallText;
-    }
-
-    .light-text {
-        @include normalText;
-        font-weight: bold;
-        color: $shipCove;
-    }
 
     .mobile-container {
         width: 100%;
-        background-color: $offWhite;
+        background-color: $offWhite;  
         border-radius: 0.5rem;
         overflow: hidden;
     }
@@ -183,5 +182,16 @@
     .sub-total-dark {
         background-color: $vulcan;
     }
+
+        .total-label {
+        @include smallText;
+    }
+
+    .light-text {
+        @include normalText;
+        font-weight: bold;
+        color: $shipCove !important;
+    }
+
 
 </style>

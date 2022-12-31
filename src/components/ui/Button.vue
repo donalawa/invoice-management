@@ -1,19 +1,31 @@
 <script lang="ts">
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { getThemeMode, getDeviceType }
+        },
         props: ['type','onClick','isDisabled', 'isInvoiceAdd']
     }
 </script>
 
 <template>
-    <button v-if="type == 'primary'" :disabled="isDisabled" role="button" class="primary-button" @click="onClick"> 
+    <button v-if="type == 'primary'" :disabled="isDisabled" role="button" class="primary-button" :class="getThemeMode == 'dark' ?  '' : ''" @click="onClick"> 
         <slot />
     </button>
 
-    <button v-if="type == 'secondary'" :disabled="isDisabled" role="button" class="secondary-button dark-secondary" @click="onClick"> 
+    <button v-if="type == 'secondary'" :disabled="isDisabled" role="button" class="secondary-button" :class="getThemeMode == 'dark' ?  'dark-secondary' : ''" @click="onClick"> 
         <slot />
     </button>
     
-    <button v-if="type == 'dark'" :disabled="isDisabled" role="button" class="dark-button dark-dark" @click="onClick"> 
+    <button v-if="type == 'dark'" :disabled="isDisabled" role="button" class="dark-button" :class="getThemeMode == 'dark' ?  'dark-dark' : ''" @click="onClick"> 
         <slot />
     </button>
 
@@ -21,11 +33,11 @@
         <slot />
     </button>
 
-    <button v-if="type == 'btn-large'" :disabled="isDisabled" role="button" class="btn-large dark-large" @click="onClick"> 
+    <button v-if="type == 'btn-large'" :disabled="isDisabled" role="button" class="btn-large" :class="getThemeMode == 'dark' ?  'dark-large' : ''" @click="onClick"> 
         <slot />
     </button>
 
-    <button v-if="type == 'btn-add'" :disabled="isDisabled" role="button" class="btn-add btn-add-dark"  :class="isInvoiceAdd ? 'add-invoice add-invoice-dark' : ''" @click="onClick"> 
+    <button v-if="type == 'btn-add'" :disabled="isDisabled" role="button" class="btn-add"  :class="[isInvoiceAdd ? 'add-invoice' : '', getThemeMode == 'dark' ?  'btn-add-dark add-invoice-dark' : '']" @click="onClick"> 
         <slot />
     </button>
 

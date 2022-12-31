@@ -1,5 +1,17 @@
 <script lang="ts">
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { getThemeMode, getDeviceType }
+        },
         props: ['clicked'],
         data() {
             return {
@@ -8,14 +20,7 @@
         }
     }
 </script>
-<script lang="ts" setup>
-    import { useScreenStore } from '../../stores/screen';
-    import  { storeToRefs } from 'pinia';
 
-    const store = useScreenStore();
-    const { getDeviceType } = storeToRefs(store);
-
-</script>
 
 <template>
     <button class="add-button" @click="clicked">

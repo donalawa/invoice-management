@@ -1,15 +1,27 @@
-<script>
+<script lang="ts">
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { getThemeMode, getDeviceType }
+        },
         props:['name','value', 'label', 'updateValue','errors']
         
     }
 </script>
 
 <template>
-    <div class="dark">
+    <div class="" :class="getThemeMode == 'dark' ? 'dark' : ''">
         <label class="label-text" for="name">{{ label }}</label>
         <label class="error-text" v-for="(error, index) of errors" :key="index" for="">{{ error.$message }}</label>
-        <input @change="(e) => updateValue(name, e.target.value)" :value="value" class="date-field dark-date" type="date">
+        <input @change="(e) => updateValue(name, e.target.value)" :value="value" class="date-field" :class="getThemeMode == 'dark' ? 'dark-date' : ''" type="date">
     </div>
 </template>  
 

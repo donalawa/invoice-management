@@ -1,25 +1,33 @@
 <script lang="ts">
     import InvoiceStatus from '../shared/InvoiceStatus.vue';
     import ActionControl from './ActionControl.vue';
+    
+    import { useScreenStore } from '../../stores/screen';
+        import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
 
     export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { getThemeMode, getDeviceType }
+        },
         props: ['editModal'],
         components: {InvoiceStatus, ActionControl},
     }
 </script>
 
 <script lang="ts" setup>
-    import { useScreenStore } from '../../stores/screen';
-    import  { storeToRefs } from 'pinia';
 
-    const store = useScreenStore();
-    const { getDeviceType } = storeToRefs(store);
 
 </script>
 
 
 <template>
-    <div class="container dark-container">
+    <div class="container" :class="getThemeMode  == 'dark' ? 'dark-container' : ''">
         <div class="info-container">
             <p class="status-text">Status</p>
             <InvoiceStatus :status="'paid'"/>

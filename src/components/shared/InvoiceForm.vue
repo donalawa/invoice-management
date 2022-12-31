@@ -7,6 +7,7 @@ import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
 import DatePicker  from '../ui/DatePicker.vue';
 import InvoiceItemList from '../shared/InvoiceItemList.vue';
+import BackButton from '../shared/BackButton.vue';
 
 import { useScreenStore } from '../../stores/screen';
 import { useThemeStore } from  '../../stores/theme';
@@ -30,7 +31,12 @@ import { useThemeStore } from  '../../stores/theme';
 
     export default {
         setup() {
-            return { v$: useVuelidate() }
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { v$: useVuelidate(), getThemeMode, getDeviceType }
         },
 
         components: {Heading, Input, Button, Fragment, DatePicker, InvoiceItemList},
@@ -127,7 +133,8 @@ import { useThemeStore } from  '../../stores/theme';
 
 
 <template>
-    <div class="form-container form-dark" :style="{ 'transform': show ? 'translateX(0%)' : 'translateX(-100%)' }">
+    <div class="form-container" :class="getThemeMode == 'dark' ? 'form-dark' : ''" :style="{ 'transform': show ? 'translateX(0%)' : 'translateX(-100%)' }">
+       <BackButton v-if="getDeviceType == 'phone'"/>
         <form class="form-content content-dark" @submit.prevent="onSubmit">
             <div class="spacer">
                 <Heading :type="'h1'">
@@ -157,7 +164,7 @@ import { useThemeStore } from  '../../stores/theme';
             </div>  
             <!-- <p>{{ form.streetAddress }}</p> -->
             <!-- ACTION  BUTTONS -->
-            <div class="button-container dark-button">
+            <div class="button-container" :class="getThemeMode == 'dark' ? 'dark-button' : ''">
                 <Fragment v-if="isEditing">
                     <div></div>
                     <div>

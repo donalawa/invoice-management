@@ -1,10 +1,23 @@
 <script lang="ts">
-    
+    import { useScreenStore } from '../../stores/screen';
+    import { useThemeStore } from  '../../stores/theme';
+    import  { storeToRefs } from 'pinia';
+
+    export default {
+        setup() {
+            const store = useScreenStore();
+            const  themeStore  = useThemeStore();
+
+            const { getDeviceType } = storeToRefs(store);
+            const { getThemeMode } = storeToRefs(themeStore);
+            return { getThemeMode, getDeviceType }
+      },
+    }
 </script>
 
 <template>
     <div class="button-container">
-        <button class="back-button dark-button">
+        <button class="back-button" :class="getThemeMode == 'dark' ? 'dark-button' : ''">
             <img src="../../assets/icons/icon-arrow-left.svg"/>
             <span>Go back</span>
         </button>
