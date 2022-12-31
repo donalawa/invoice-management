@@ -12,12 +12,13 @@
             const { getThemeMode } = storeToRefs(themeStore);
             return { getThemeMode, getDeviceType }
       },
+      props: ['onClick']
     }
 </script>
 
 <template>
-    <div class="button-container">
-        <button class="back-button" :class="getThemeMode == 'dark' ? 'dark-button' : ''">
+    <div class="back-button-container">
+        <button class="back-button" @click="onClick" :class="getThemeMode == 'dark' ? 'dark-button' : ''">
             <img src="../../assets/icons/icon-arrow-left.svg"/>
             <span>Go back</span>
         </button>
@@ -28,7 +29,7 @@
     @import '../../scss/_mixins.scss';
     @import '../../scss/_variables.scss';
 
-    .button-container {
+    .back-button-container {
         padding: 2rem 0;
         @include container;
     }

@@ -11,6 +11,7 @@ import BackButton from '../shared/BackButton.vue';
 
 import { useScreenStore } from '../../stores/screen';
 import { useThemeStore } from  '../../stores/theme';
+import {  useFormStore  } from '../../stores/form';
  import  { storeToRefs } from 'pinia';
 
 
@@ -33,13 +34,15 @@ import { useThemeStore } from  '../../stores/theme';
         setup() {
             const store = useScreenStore();
             const  themeStore  = useThemeStore();
+            const formStore = useFormStore();
 
             const { getDeviceType } = storeToRefs(store);
             const { getThemeMode } = storeToRefs(themeStore);
-            return { v$: useVuelidate(), getThemeMode, getDeviceType }
+            const { sidebarMode } = storeToRefs(formStore)
+            return { v$: useVuelidate(), getThemeMode, getDeviceType, formStore }
         },
 
-        components: {Heading, Input, Button, Fragment, DatePicker, InvoiceItemList},
+        components: {Heading, Input, Button, Fragment, DatePicker, InvoiceItemList, BackButton},
         props: ['toggle','show'],
         data() {
             return {
@@ -134,7 +137,7 @@ import { useThemeStore } from  '../../stores/theme';
 
 <template>
     <div class="form-container" :class="getThemeMode == 'dark' ? 'form-dark' : ''" :style="{ 'transform': show ? 'translateX(0%)' : 'translateX(-100%)' }">
-       <BackButton v-if="getDeviceType == 'phone'"/>
+       <BackButton :onClick="() => formStore.isActive = false" v-if="getDeviceType == 'phone'"/>
         <form class="form-content content-dark" @submit.prevent="onSubmit">
             <div class="spacer">
                 <Heading :type="'h1'">

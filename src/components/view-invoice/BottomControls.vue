@@ -2,13 +2,14 @@
     import ActionControl from './ActionControl.vue';
 
     export default  {
+        props: ['editModal'],
         components: { ActionControl }
     }
 </script>
 
 <template>
     <div class="mobile-control-container controls-dark">
-        <ActionControl />
+        <ActionControl :onEdit="editModal"/>
     </div>
 </template>
 

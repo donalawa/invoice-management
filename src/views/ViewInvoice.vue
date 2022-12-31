@@ -15,9 +15,6 @@
         },
 
         methods: {
-            toggleForm() {
-                this.showForm  = !this.showForm;
-            },
             editInvoice() {
                 this.showForm  = !this.showForm;
             }
@@ -29,24 +26,26 @@
 
     import { useScreenStore } from '../stores/screen';
     import { useThemeStore } from  '../stores/theme';
+    import {  useFormStore } from '../stores/form';
 
     import  { storeToRefs } from 'pinia';
 
     const store = useScreenStore();
-    const  themeStore  = useThemeStore();
-
+    const themeStore  = useThemeStore();
+    const formStore = useFormStore();
+    
     const { getDeviceType } = storeToRefs(store);
     const { getThemeMode } = storeToRefs(themeStore);
-
+    const { sidebarMode } = storeToRefs(formStore);
 </script>
 <template>
     <div class="page-container" :class="getThemeMode == 'dark' ? 'page-dark' : ''">
-        <BackButton />
+        <BackButton :onClick="() => this.$router.push({ path: '/' })"/>
         <!-- <p>Device Type: {{ getDeviceType }}</p> -->
-        <InvoiceStatusBar :editModal="editInvoice" />
+        <InvoiceStatusBar :editModal="() => formStore.editInvoice()" />
         <InvoiceDetails />
-        <BottomControls v-if="getDeviceType == 'phone'"/>
-        <InvoiceForm :toggle="toggleForm" :show="showForm" v-if="showForm" />
+        <BottomControls :editModal="() => formStore.editInvoice()"  v-if="getDeviceType == 'phone'"/>
+        <InvoiceForm :toggle="() => formStore.isActive = !formStore.isActive" :show="sidebarMode" v-if="sidebarMode" />
     </div>
 </template>
 

@@ -2,6 +2,7 @@
     import TopBar from  '@/components/home/TopBar.vue';
     import InvoiceList from '@/components/home/InvoiceList.vue';
     import  InvoiceForm from '@/components/shared/InvoiceForm.vue';
+    import {  useFormStore } from '../stores/form';
 
     export  default {
         components: {TopBar, InvoiceList, InvoiceForm},
@@ -25,14 +26,17 @@
 
     const  themeStore  = useThemeStore();
     const { getThemeMode } = storeToRefs(themeStore);
+    const formStore = useFormStore();
+
+    const { sidebarMode } = storeToRefs(formStore);
 
 </script>
 <template>
     <div class="home-container" :class="getThemeMode == 'dark' ? 'dark-home' : ''">
-        <TopBar :toggle="toggleForm"/>
+        <TopBar :toggle="() => formStore.isActive = !formStore.isActive"/>
         <InvoiceList />
     </div>
-        <InvoiceForm :toggle="toggleForm" :show="showForm" v-if="showForm" />
+        <InvoiceForm :toggle="() => formStore.isActive = !formStore.isActive" :show="sidebarMode" v-if="sidebarMode" />
 </template>
 
 

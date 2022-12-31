@@ -11,7 +11,7 @@
         setup() {
             const store = useScreenStore();
             const  themeStore  = useThemeStore();
-
+            
             const { getDeviceType } = storeToRefs(store);
             const { getThemeMode } = storeToRefs(themeStore);
 
