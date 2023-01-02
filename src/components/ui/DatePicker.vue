@@ -21,7 +21,8 @@
     <div class="" :class="getThemeMode == 'dark' ? 'dark' : ''">
         <label class="label-text" for="name">{{ label }}</label>
         <label class="error-text" v-for="(error, index) of errors" :key="index" for="">{{ error.$message }}</label>
-        <input @change="(e) => updateValue(name, e.target.value)" :value="value" class="date-field" :class="getThemeMode == 'dark' ? 'dark-date' : ''" type="date">
+        <input :value="value" class="date-field" :class="getThemeMode == 'dark' ? 'dark-date' : ''" type="date">
+         <!-- @change="(e) => updateValue(name, e.target.value)" -->
     </div>
 </template>  
 
