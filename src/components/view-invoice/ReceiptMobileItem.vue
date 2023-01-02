@@ -1,4 +1,4 @@
-<script>
+<script lang="ts"> 
     import Fragement from '../ui/Fragment.vue';
     import { useScreenStore } from '../../stores/screen';
     import { useThemeStore } from  '../../stores/theme';
