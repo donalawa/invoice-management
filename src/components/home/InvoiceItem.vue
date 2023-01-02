@@ -10,6 +10,11 @@
             return {
                 phone: true
             }
+        },
+        methods: {
+            changePage(){
+                this.$router.push({ path: '/invoice/RT3080' })
+            }
         }
     }
 </script>
@@ -29,7 +34,7 @@
 </script>
 
 <template>
-    <div class="item-container  " :class="getThemeMode == 'dark' ? 'item-dark' : ''" @click="this.$router.push({ path: '/invoice/RT3080' })">
+    <div class="item-container  " :class="getThemeMode == 'dark' ? 'item-dark' : ''" @click="changePage">
         <div class="item-overview">
             <p class="itemId">
                 <span>#</span>

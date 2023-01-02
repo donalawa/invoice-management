@@ -40,7 +40,7 @@
 </script>
 <template>
     <div class="page-container" :class="getThemeMode == 'dark' ? 'page-dark' : ''">
-        <BackButton :onClick="() => this.$router.push({ path: '/' })"/>
+        <!-- <BackButton :onClick="() => this.$router.push({ path: '/' })"/> -->
         <!-- <p>Device Type: {{ getDeviceType }}</p> -->
         <InvoiceStatusBar :editModal="() => formStore.editInvoice()" />
         <InvoiceDetails />
