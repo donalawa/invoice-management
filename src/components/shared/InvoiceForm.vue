@@ -106,7 +106,7 @@ import {  useFormStore  } from '../../stores/form';
                 }
             },
 
-            onSubmit(event: SubmitEvent) {
+            onSubmit(event: any) {
                 // console.log('Form Submited', event.submitter);
                 let fields = {...this.form};
                 console.log(fields);

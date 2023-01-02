@@ -20,9 +20,6 @@
     }
 </script>
 
-<script lang="ts" setup>
-    
-</script>
 
 <template>
     <div class="container" :class="getThemeMode  == 'dark' ? 'dark-container' : ''">

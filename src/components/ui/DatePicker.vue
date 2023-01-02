@@ -12,7 +12,7 @@
             const { getThemeMode } = storeToRefs(themeStore);
             return { getThemeMode, getDeviceType }
         },
-        props:['name','value', 'label', 'updateValue','errors']
+        props:['name','value', 'label', 'updateValue','errors'] as any | null
         
     }
 </script>

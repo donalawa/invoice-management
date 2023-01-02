@@ -67,7 +67,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="receipt-total " :class="getDeviceType == 'dark' ? 'dark-total' : ''">
+        <div class="receipt-total " :class="getThemeMode == 'dark' ? 'dark-total' : ''">
             <p class="total-label">
                 Amount Due
             </p>
