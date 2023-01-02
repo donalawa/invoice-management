@@ -17,6 +17,9 @@
         methods: {
             editInvoice() {
                 this.showForm  = !this.showForm;
+            },
+            changePage() {
+                this.$router.push({ path: '/' })
             }
         }
     }
@@ -40,7 +43,7 @@
 </script>
 <template>
     <div class="page-container" :class="getThemeMode == 'dark' ? 'page-dark' : ''">
-        <!-- <BackButton :onClick="() => this.$router.push({ path: '/' })"/> -->
+        <BackButton :onClick="changePage"/>
         <!-- <p>Device Type: {{ getDeviceType }}</p> -->
         <InvoiceStatusBar :editModal="() => formStore.editInvoice()" />
         <InvoiceDetails />
